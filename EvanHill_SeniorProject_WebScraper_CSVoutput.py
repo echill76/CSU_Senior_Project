@@ -2,12 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 
-# URLs (replace these with better target links if needed)
+# URLs
 SALARY_URL = 'https://www.bls.gov/emp/tables/unemployment-earnings-education.htm'
 HOUSING_URL = 'https://www.rentcafe.com/average-rent-market-trends/us/tn/'
-TRANSPORT_URL = ''
-TECH_URL = ''
-FOOD_URL = ''
+TRANSPORT_URL = 'https://www.nerdwallet.com/article/loans/auto-loans/average-monthly-car-payment'
+CLOTHING_URL = 'https://jinfengapparel.com/what-is-the-typical-price-range-for-clothing-in-the-usa/'
+FOOD_URL = 'https://www.nerdwallet.com/article/finance/how-much-should-i-spend-on-groceries'
 
 def scrape_salaries():
     response = requests.get(SALARY_URL)
@@ -30,7 +30,7 @@ def scrape_salaries():
     else:
         print("No salary table found.")
 
-def scrape_housing_prices():
+def scrape_housing_data():
     response = requests.get(HOUSING_URL)
     soup = BeautifulSoup(response.text, 'html.parser')
     housing_data = []
@@ -73,26 +73,26 @@ def scrape_transportation_data():
         print("No salary table found.")
     return transport_data
 
-def scrape_tech_data():
-    response = requests.get(TRANSPORT_URL)
+def scrape_clothing_data():
+    response = requests.get(CLOTHING_URL)
     soup = BeautifulSoup(response.text, 'html.parser')
-    tech_data = []
+    clothing_data = []
     
-    tech_section = soup.find('table')
-    if tech_section:
-        rows = tech_section.find_all('tr')[1:]
+    clothing_section = soup.find('table')
+    if clothing_section:
+        rows = clothing_section.find_all('tr')[1:]
         for row in rows:
             cells = row.find_all('td')
             if len(cells) >= 2:
                 education_level = cells[0].get_text(strip=True)
                 try:
                     avg_salary = float(cells[1].get_text(strip=True).replace('$', '').replace(',', ''))
-                    tech_data.append((education_level, avg_salary))
+                    clothing_data.append((education_level, avg_salary))
                 except ValueError:
                     continue
     else:
         print("No salary table found.")
-    return tech_data
+    return clothing_data
 
 def scrape_food_data():
     response = requests.get(TRANSPORT_URL)
@@ -124,7 +124,7 @@ def write_csv(filename, data, headers):
 
 def main():
     # Scrape housing
-    housing_data = scrape_housing_prices()
+    housing_data = scrape_housing_data()
     write_csv('housing_options.csv', housing_data, ['DESCRIPTION', 'MONTHLY_COST'])
 
     # Scrape transportation
@@ -132,7 +132,7 @@ def main():
     write_csv('transport_options.csv', transport_data, ['DESCRIPTION', 'MONTHLY_COST'])
 
     # Scrape technology
-    tech_data = scrape_tech_data()
+    tech_data = scrape_clothing_data()
     write_csv('tech_options.csv', tech_data, ['DESCRIPTION', 'MONTHLY_COST'])
 
     # Scrape food
@@ -141,6 +141,6 @@ def main():
 
     # Scrape salary/careers
     career_data = scrape_salaries()
-    write_csv('careers.csv', career_data, ['NAME', 'INCOME'])
+    write_csv('careers.csv', career_data, ['CAREER_NAME', 'INCOME'])
 
     print("Scraping complete. CSV files are ready.")
