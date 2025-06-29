@@ -12,8 +12,8 @@ FOOD_URL = 'https://www.nerdwallet.com/article/finance/how-much-should-i-spend-o
 
 def scrape_salaries():
     response = requests.get(SALARY_URL)
-    soup = BeautifulSoup(response.content, "html.parser")
-    #print(soup)
+    soup = BeautifulSoup(response.content, features="html.parser")
+    print(soup)
     '''
     # salary_data = []
     # Find table or structured data (this is fragile; may need adjustments based on site changes)
@@ -37,7 +37,7 @@ def scrape_salaries():
 
 def scrape_housing_data():
     response = requests.get(HOUSING_URL)
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.text, features="html.parser")
     #print(soup)
     '''    
     housing_data = []
@@ -61,7 +61,7 @@ def scrape_housing_data():
 
 def scrape_transportation_data():
     response = requests.get(TRANSPORT_URL)
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.text, features="html.parser")
     #print(soup)
     '''
     transport_data = []
@@ -86,7 +86,7 @@ def scrape_transportation_data():
 
 def scrape_clothing_data():
     response = requests.get(CLOTHING_URL)
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.text, features="html.parser")
     #print(soup)
     '''
     clothing_data = []
@@ -110,7 +110,7 @@ def scrape_clothing_data():
 
 def scrape_food_data():
     response = requests.get(FOOD_URL)
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.text, features="html.parser")
     #print(soup)
     '''
     food_data = []
