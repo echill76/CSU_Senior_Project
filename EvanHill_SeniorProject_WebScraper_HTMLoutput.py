@@ -16,25 +16,25 @@ def scrape_salaries():
 
 def scrape_housing_data():
     response = requests.get(HOUSING_URL)
-    soup = BeautifulSoup(response.text, features="html.parser")
+    soup = BeautifulSoup(response.content, features="html.parser")
     #print(soup)
     return soup
 
 def scrape_transportation_data():
     response = requests.get(TRANSPORT_URL)
-    soup = BeautifulSoup(response.text, features="html.parser")
+    soup = BeautifulSoup(response.content, features="html.parser")
     #print(soup)
     return soup
 
 def scrape_clothing_data():
     response = requests.get(CLOTHING_URL)
-    soup = BeautifulSoup(response.text, features="html.parser")
+    soup = BeautifulSoup(response.content, features="html.parser")
     #print(soup)
     return soup
 
 def scrape_food_data():
     response = requests.get(FOOD_URL)
-    soup = BeautifulSoup(response.text, features="html.parser")
+    soup = BeautifulSoup(response.content, features="html.parser")
     #print(soup)
     return soup
 
