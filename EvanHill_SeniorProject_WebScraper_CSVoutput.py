@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import csv
+#import re
 
 # URLs
 SALARY_URL = 'https://www.bls.gov/emp/tables/unemployment-earnings-education.htm'
@@ -11,9 +12,10 @@ FOOD_URL = 'https://www.nerdwallet.com/article/finance/how-much-should-i-spend-o
 
 def scrape_salaries():
     response = requests.get(SALARY_URL)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    salary_data = []
-
+    soup = BeautifulSoup(response.content, "html.parser")
+    #print(soup)
+    '''
+    # salary_data = []
     # Find table or structured data (this is fragile; may need adjustments based on site changes)
     salary_section = soup.find('table')
     if salary_section:
@@ -29,12 +31,16 @@ def scrape_salaries():
                     continue
     else:
         print("No salary table found.")
+    return salary_data
+    '''
+    return soup
 
 def scrape_housing_data():
     response = requests.get(HOUSING_URL)
     soup = BeautifulSoup(response.text, 'html.parser')
+    #print(soup)
+    '''    
     housing_data = []
-
     rent_table = soup.find('table')
     if rent_table:
         rows = rent_table.find_all('tr')[1:]
@@ -50,12 +56,15 @@ def scrape_housing_data():
     else:
         print("No housing table found.")
     return housing_data
+    '''
+    return soup
 
 def scrape_transportation_data():
     response = requests.get(TRANSPORT_URL)
     soup = BeautifulSoup(response.text, 'html.parser')
+    #print(soup)
+    '''
     transport_data = []
-
     # Find table or structured data (this is fragile; may need adjustments based on site changes)
     transport_section = soup.find('table')
     if transport_section:
@@ -72,12 +81,15 @@ def scrape_transportation_data():
     else:
         print("No salary table found.")
     return transport_data
+    '''
+    return soup
 
 def scrape_clothing_data():
     response = requests.get(CLOTHING_URL)
     soup = BeautifulSoup(response.text, 'html.parser')
+    #print(soup)
+    '''
     clothing_data = []
-    
     clothing_section = soup.find('table')
     if clothing_section:
         rows = clothing_section.find_all('tr')[1:]
@@ -93,12 +105,15 @@ def scrape_clothing_data():
     else:
         print("No salary table found.")
     return clothing_data
+    '''
+    return soup
 
 def scrape_food_data():
-    response = requests.get(TRANSPORT_URL)
+    response = requests.get(FOOD_URL)
     soup = BeautifulSoup(response.text, 'html.parser')
+    #print(soup)
+    '''
     food_data = []
-    
     food_section = soup.find('table')
     if food_section:
         rows = food_section.find_all('tr')[1:]
@@ -114,6 +129,8 @@ def scrape_food_data():
     else:
         print("No salary table found.")
     return food_data
+    '''
+    return soup
 
 def write_csv(filename, data, headers):
     with open(filename, mode='w', newline='', encoding='utf-8') as file:
@@ -131,9 +148,9 @@ def main():
     transport_data = scrape_transportation_data()
     write_csv('transport_options.csv', transport_data, ['DESCRIPTION', 'MONTHLY_COST'])
 
-    # Scrape technology
-    tech_data = scrape_clothing_data()
-    write_csv('tech_options.csv', tech_data, ['DESCRIPTION', 'MONTHLY_COST'])
+    # Scrape clothing
+    clothing_data = scrape_clothing_data()
+    write_csv('clothing_options.csv', clothing_data, ['DESCRIPTION', 'MONTHLY_COST'])
 
     # Scrape food
     food_data = scrape_food_data()
@@ -144,3 +161,7 @@ def main():
     write_csv('careers.csv', career_data, ['CAREER_NAME', 'INCOME'])
 
     print("Scraping complete. CSV files are ready.")
+
+
+if __name__ == "__main__":
+        main()
