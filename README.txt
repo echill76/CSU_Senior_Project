@@ -1,6 +1,5 @@
 Hello! Welcome to my Senior Project code hosting repository!
 
-To run my software, you can download the .cpp file and compile it on your device using a C++ compiler. 
-You could also try downloading the executable file and running that by itself, but that may not work.
+This is the code hosting solely for the web scraper part of my project. The actual game app and database backend are located on Oracle APEX.
 
-This software is intended to be open-source.
+Any files other than the main web scraper Python file and the CSV files it outputs are purely for legacy purposes.
